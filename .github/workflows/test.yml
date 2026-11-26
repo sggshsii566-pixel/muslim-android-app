@@ -78,7 +78,7 @@ jobs:
           name: shots-api${{ matrix.api }}
           path: out
   release:
-    needs: emu
+    needs: build
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/download-artifact@v4
@@ -88,4 +88,4 @@ jobs:
         run: |
           cd w/app/build/outputs/apk/release && ls
           sha256sum *.apk > SHA256.txt
-          gh release create muslim-run${{ github.run_number }} *.apk SHA256.txt --repo ${{ github.repository }} --title "MUSLIM 1.0.0 (run ${{ github.run_number }})" --notes "Emulator-tested build. See shots-api34 and shots-api35 branches for screenshots."
+          gh release create muslim-run${{ github.run_number }} *.apk SHA256.txt --repo ${{ github.repository }} --prerelease --title "MUSLIM 1.0.0 UNTESTED (run ${{ github.run_number }})" --notes "UNTESTED build. It compiles and unit tests pass, but no one has run it on a device yet. Emulator results will appear on the shots-api34 and shots-api35 branches if CI emulators boot."
